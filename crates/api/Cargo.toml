@@ -1,0 +1,12 @@
+[package]
+name = "book_notes_api"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[lib]
+name = "book_notes_api"
+path = "src/lib.rs"
+
+[dependencies]
+actix-web = { version = "4.9.0"}

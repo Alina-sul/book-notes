@@ -1,11 +1,27 @@
-[package]
-name = "book-notes"
+[workspace.package]
 version = "0.1.0"
+authors = ["Alina-sul"]
 edition = "2021"
 
+
+[package]
+name = "book-notes"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[workspace]
+members = [
+    ".",
+    "crates/api",
+]
+
+[workspace.dependencies]
+book_notes_api = {path = "./crates/api"}
+
 [dependencies]
-actix-web = "4.0"   # Actix web framework
-sqlx = { version = "0.6", features = ["postgres", "runtime-tokio-native-tls"] } # SQLx for PostgreSQL
+sqlx = { version = "0.8.2", features = ["postgres", "runtime-tokio-native-tls"] } # SQLx for PostgreSQL
 dotenvy = "0.15"    # For environment variable management
 serde = { version = "1.0", features = ["derive"] }  # For JSON serialization/deserialization
 tokio = { version = "1", features = ["full"] }  # Async runtime
+book_notes_api = { workspace = true}
