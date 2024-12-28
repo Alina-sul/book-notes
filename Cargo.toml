@@ -1,0 +1,11 @@
+[package]
+name = "book-notes"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-web = "4.0"   # Actix web framework
+sqlx = { version = "0.6", features = ["postgres", "runtime-tokio-native-tls"] } # SQLx for PostgreSQL
+dotenvy = "0.15"    # For environment variable management
+serde = { version = "1.0", features = ["derive"] }  # For JSON serialization/deserialization
+tokio = { version = "1", features = ["full"] }  # Async runtime
