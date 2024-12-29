@@ -1,10 +1,23 @@
-// Declare the `routes` module. This tells the Rust compiler there is a file named `routes.rs`
-// (or a folder `routes/` with a `mod.rs`) in the same directory.
-// Anything declared `pub` inside `routes.rs` can be accessed via `routes::<item>`.
-pub mod routes;
+pub mod books;
+pub mod notes;
 
-// Re-export the `routes` item from the `routes` module. This means that from outside this
-// module, I can refer to `routes` directly at the current module level, rather than having
-// to do `my_crate::my_module::routes::routes`. It shortens the access path and makes the
-// `routes` function (or struct/constant) directly accessible wherever this module is in scope.
-pub use routes::{routes};
+use actix_web::{web, Scope};
+use sqlx::PgPool;
+use std::env;
+
+pub async fn init_pool() -> PgPool {
+    dotenvy::dotenv().ok(); // Load .env if present
+
+    let database_url = env::var("DATABASE_URL")
+        .expect("DATABASE_URL must be set in .env");
+
+    PgPool::connect(&database_url)
+        .await
+        .expect("Failed to create Postgres pool")
+}
+
+pub fn routes() -> Scope {
+    web::scope("")
+        .service(books::create_book)
+    // .service(notes::create_note) // etc. for notes
+}

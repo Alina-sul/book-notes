@@ -10,3 +10,11 @@ path = "src/lib.rs"
 
 [dependencies]
 actix-web = { version = "4.9.0"}
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# SQLx for Postgres:
+sqlx = { version = "0.8", features = ["runtime-tokio-native-tls", "postgres"] }
+
+# For loading environment variables:
+dotenvy = "0.15"

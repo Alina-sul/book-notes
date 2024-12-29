@@ -20,8 +20,6 @@ members = [
 book_notes_api = {path = "./crates/api"}
 
 [dependencies]
-sqlx = { version = "0.8.2", features = ["postgres", "runtime-tokio-native-tls"] } # SQLx for PostgreSQL
-dotenvy = "0.15"    # For environment variable management
-serde = { version = "1.0", features = ["derive"] }  # For JSON serialization/deserialization
 tokio = { version = "1", features = ["full"] }  # Async runtime
 book_notes_api = { workspace = true}
+actix-web = "4.9.0"
