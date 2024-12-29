@@ -18,15 +18,6 @@ pub async fn init_pool() -> PgPool {
 }
 
 
-/// Builds the Axum router for this API.
-///
-/// # Arguments
-///
-/// * `pool` - The Postgres connection pool.
-///
-/// # Returns
-///
-/// * A configured Axum `Router`.
 pub fn create_app(pool: Pool<Postgres>) -> Router {
     Router::new()
         .route("/books", post(books::create_book))
