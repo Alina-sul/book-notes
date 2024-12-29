@@ -9,7 +9,7 @@ name = "book_notes_api"
 path = "src/lib.rs"
 
 [dependencies]
-actix-web = { version = "4.9.0"}
+axum = { version = "0.7.9" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 

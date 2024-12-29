@@ -1,7 +1,8 @@
 pub mod books;
 pub mod notes;
 
-use actix_web::{web, Scope};
+use axum::{routing::post, Router};
+use sqlx::{Pool, Postgres};
 use sqlx::PgPool;
 use std::env;
 
@@ -16,8 +17,19 @@ pub async fn init_pool() -> PgPool {
         .expect("Failed to create Postgres pool")
 }
 
-pub fn routes() -> Scope {
-    web::scope("")
-        .service(books::create_book)
-    // .service(notes::create_note) // etc. for notes
+
+/// Builds the Axum router for this API.
+///
+/// # Arguments
+///
+/// * `pool` - The Postgres connection pool.
+///
+/// # Returns
+///
+/// * A configured Axum `Router`.
+pub fn create_app(pool: Pool<Postgres>) -> Router {
+    Router::new()
+        .route("/books", post(books::create_book))
+        // Add other routes here
+        .with_state(pool)
 }

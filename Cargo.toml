@@ -20,6 +20,9 @@ members = [
 book_notes_api = {path = "./crates/api"}
 
 [dependencies]
+axum = { version = "0.7", features = ["tokio", "http1"] }
 tokio = { version = "1", features = ["full"] }  # Async runtime
 book_notes_api = { workspace = true}
-actix-web = "4.9.0"
+sqlx = "0.8.2"
+# For loading environment variables:
+dotenvy = "0.15"
