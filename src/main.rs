@@ -2,7 +2,7 @@ use sqlx::PgPool;
 use tokio;
 use std::env;
 mod server;
-use server::create_app;
+use server::create_server;
 
 #[tokio::main]
 async fn main() {
@@ -16,7 +16,7 @@ async fn main() {
         .expect("Failed to create Postgres pool");
 
     // Build the app (router)
-    let app = create_app(pool);
+    let app = create_server(pool);
 
     // Define the address/port
     let addr = tokio::net::TcpListener::bind("127.0.0.1:8080").await.unwrap();
