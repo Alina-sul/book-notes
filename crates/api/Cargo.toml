@@ -9,12 +9,10 @@ name = "book_notes_api"
 path = "src/lib.rs"
 
 [dependencies]
-axum = { version = "0.7.9" }
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-
-# SQLx for Postgres:
-sqlx = { version = "0.8", features = ["runtime-tokio-native-tls", "postgres"] }
-
-# For loading environment variables:
-dotenvy = "0.15"
+axum = { workspace = true }
+sqlx = { workspace = true, features = ["runtime-tokio-native-tls", "postgres"] }
+dotenvy = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+utoipa = { workspace = true }
+utoipa-swagger-ui = {workspace = true}

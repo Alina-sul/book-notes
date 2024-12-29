@@ -6,22 +6,22 @@ use axum::{
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use sqlx::{Pool, Postgres};
+use utoipa::ToSchema;
+use utoipa;
 
-#[derive(Debug, Serialize, Deserialize)]
+/// This is the JSON body we expect for creating a new book
+#[derive(Debug, Serialize, Deserialize, ToSchema)]
 pub struct NewBook {
+    /// Title of the book
     pub title: String,
+
+    /// Name of the author
     pub author: String,
 }
 
-/// Axum handler for creating a new book.
-///
-/// Expects JSON body like:
-/// {
-///   "title": "My Book",
-///   "author": "John Doe"
-/// }
-///
-/// On success, returns HTTP 201 with `{ "id": <new_book_id> }`.
+#[utoipa::path(post, path = "/books/create", params(
+
+))]
 pub async fn create_book(
     State(pool): State<Pool<Postgres>>,
     Json(new_book): Json<NewBook>,

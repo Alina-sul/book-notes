@@ -1,9 +1,8 @@
-use std::net::SocketAddr;
 use sqlx::PgPool;
 use tokio;
 use std::env;
 mod server;
-use crate::server::create_app;
+use server::create_app;
 
 #[tokio::main]
 async fn main() {
