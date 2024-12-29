@@ -1,0 +1,7 @@
+# rustfmt.toml
+
+max_width = 100             # Maximum line width
+hard_tabs = false           # Use spaces instead of tabs
+tab_spaces = 4              # Number of spaces per tab
+fn_brace_style = "AlwaysNextLine"  # Place function braces on the next line
+use_small_heuristics = "Max"       # Avoid unnecessary formatting changes

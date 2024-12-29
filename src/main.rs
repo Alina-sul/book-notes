@@ -1,6 +1,6 @@
 use sqlx::PgPool;
-use tokio;
 use std::env;
+use tokio;
 mod server;
 use server::create_server;
 
@@ -9,11 +9,9 @@ async fn main() {
     // load .env
     dotenvy::dotenv().ok();
 
-    let database_url = env::var("DATABASE_URL")
-        .expect("DATABASE_URL must be set in .env or env var");
-    let pool = PgPool::connect(&database_url)
-        .await
-        .expect("Failed to create Postgres pool");
+    let database_url =
+        env::var("DATABASE_URL").expect("DATABASE_URL must be set in .env or env var");
+    let pool = PgPool::connect(&database_url).await.expect("Failed to create Postgres pool");
 
     // Build the app (router)
     let app = create_server(pool);
