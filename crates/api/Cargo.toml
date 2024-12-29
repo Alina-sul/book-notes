@@ -1,0 +1,18 @@
+[package]
+name = "book_notes_api"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[lib]
+name = "book_notes_api"
+path = "src/lib.rs"
+
+[dependencies]
+axum = { workspace = true }
+sqlx = { workspace = true, features = ["runtime-tokio-native-tls", "postgres"] }
+dotenvy = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+utoipa = { workspace = true }
+utoipa-swagger-ui = {workspace = true}
