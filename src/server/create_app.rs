@@ -1,26 +1,11 @@
-use axum::{
-    routing::post,
-    Router,
-};
-use sqlx::PgPool;
-use utoipa_swagger_ui::SwaggerUi;
-use book_notes_api::ApiDoc;
-use book_notes_api::books;
-use utoipa::OpenApi;
+use axum::Router;
 use tower_http::cors::CorsLayer;
 
-pub fn create_app(pool: PgPool) -> Router {
-    // The actual API routes
-    let api_router = Router::new()
-        .route("/books/create", post(books::create_book))
-        .with_state(pool);
+use book_notes::{AppState, create_api_routes};
 
-    // A router providing Swagger UI at `/swagger-ui`
-    let swagger_router = SwaggerUi::new("/swagger-ui")
-        .url("/api-docs/openapi.json", ApiDoc::openapi());
-
-    // Merge the two routers and add CORS:
-    api_router
-        .merge(swagger_router)
+pub fn create_app(app_state: AppState) -> Router {
+    // Create the main API router that combines all domain routers
+    create_api_routes()
+        .with_state(app_state)
         .layer(CorsLayer::permissive())
 }

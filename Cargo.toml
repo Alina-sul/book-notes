@@ -1,42 +1,17 @@
-[workspace.package]
+[package]
+name = "book-notes"
 version = "0.1.0"
 authors = ["Alina-sul"]
 edition = "2021"
 
-
-[package]
-name = "book-notes"
-version.workspace = true
-edition.workspace = true
-authors.workspace = true
-
-[workspace]
-members = [
-    ".",
-    "crates/api",
-]
-
-# Shared dependencies across the entire workspace go here
-[workspace.dependencies]
+[dependencies]
 axum = { version = "0.7", features = ["tokio", "http1"] }
 tokio = { version = "1", features = ["full"] }
-sqlx = "0.8.2"
+sqlx = { version = "0.8.2", features = ["postgres", "runtime-tokio-rustls", "chrono"] }
 utoipa = "5.3.0"
 utoipa-swagger-ui = { version = "8", features = ["axum"] }
 dotenvy = "0.15"
-book_notes_api = { path = "crates/api" }
 serde = { version = "1.0.217"}
 serde_json = { version = "1.0"}
 tower-http = { version = "0.6", features = ["cors"] }
-
-
-# The main crate's own dependencies, referencing the workspace for each:
-[dependencies]
-axum = { workspace = true }
-tokio = { workspace = true }
-sqlx = { workspace = true }
-utoipa = { workspace = true }
-utoipa-swagger-ui = { workspace = true }
-dotenvy = { workspace = true }
-book_notes_api = { workspace = true }
-tower-http = { workspace = true }
+chrono = { version = "0.4", features = ["serde"] }
