@@ -66,16 +66,22 @@ impl BookService {
         let mut conditions = Vec::new();
 
         if let Some(status) = &filter.status {
-            conditions.push(format!(" AND status = '{}'", match status {
-                BookStatus::Reading => "reading",
-                BookStatus::Finished => "finished",
-                BookStatus::Wishlist => "wishlist",
-            }));
+            conditions.push(format!(
+                " AND status = '{}'",
+                match status {
+                    BookStatus::Reading => "reading",
+                    BookStatus::Finished => "finished",
+                    BookStatus::Wishlist => "wishlist",
+                }
+            ));
         }
 
         if let Some(search) = &filter.search {
             if !search.trim().is_empty() {
-                conditions.push(format!(" AND (title ILIKE '%{}%' OR author ILIKE '%{}%')", search, search));
+                conditions.push(format!(
+                    " AND (title ILIKE '%{}%' OR author ILIKE '%{}%')",
+                    search, search
+                ));
             }
         }
 
@@ -83,7 +89,10 @@ impl BookService {
             query.push_str(&condition);
         }
 
-        query.push_str(&format!(" ORDER BY date_added DESC LIMIT {} OFFSET {}", limit, offset));
+        query.push_str(&format!(
+            " ORDER BY date_added DESC LIMIT {} OFFSET {}",
+            limit, offset
+        ));
 
         let rows = sqlx::query(&query).fetch_all(&self.pool).await?;
         let books: Vec<Book> = rows.iter().map(|row| self.row_to_book(row)).collect();
@@ -147,14 +156,18 @@ impl BookService {
             title: row.get("title"),
             author: row.get("author"),
             cover_url: row.get("cover_url"),
-            tags: row.get::<Option<Vec<String>>, _>("tags").unwrap_or_default(),
+            tags: row
+                .get::<Option<Vec<String>>, _>("tags")
+                .unwrap_or_default(),
             status: match row.get::<Option<String>, _>("status").as_deref() {
                 Some("reading") => BookStatus::Reading,
                 Some("finished") => BookStatus::Finished,
                 Some("wishlist") => BookStatus::Wishlist,
                 _ => BookStatus::Wishlist,
             },
-            date_added: row.get::<Option<chrono::NaiveDate>, _>("date_added").unwrap_or_else(|| Utc::now().date_naive()),
+            date_added: row
+                .get::<Option<chrono::NaiveDate>, _>("date_added")
+                .unwrap_or_else(|| Utc::now().date_naive()),
             date_finished: row.get("date_finished"),
             rating: row.get("rating"),
             description: row.get("description"),

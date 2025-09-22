@@ -1,0 +1,15 @@
+# Clippy configuration for stricter linting
+
+# Cognitive complexity threshold (default: 25)
+cognitive-complexity-threshold = 15
+
+# Documentation requirements
+missing-docs-in-crate-items = false
+
+# Allow some commonly used patterns
+allowed-idents-below-min-chars = ["id", "db", "ok", "tx", "rx"]
+
+# Encourage better practices
+too-many-arguments-threshold = 5
+type-complexity-threshold = 100
+single-char-binding-names-threshold = 2

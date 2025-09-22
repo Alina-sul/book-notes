@@ -1,0 +1,28 @@
+# Pre-commit hooks for Rust project
+repos:
+  - repo: local
+    hooks:
+      # Format Rust code
+      - id: rustfmt
+        name: rustfmt
+        entry: cargo fmt
+        language: system
+        files: \.rs$
+        pass_filenames: false
+
+      # Run clippy for linting (without --fix to avoid modifying files)
+      - id: clippy
+        name: clippy
+        entry: cargo clippy
+        language: system
+        files: \.rs$
+        pass_filenames: false
+        args: [--all-targets, --all-features]
+
+      # Check that code compiles
+      - id: cargo-check
+        name: cargo check
+        entry: cargo check
+        language: system
+        files: \.rs$
+        pass_filenames: false
