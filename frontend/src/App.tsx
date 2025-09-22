@@ -10,8 +10,14 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>📚 Book Notes</h1>
-        <p>Keep track of your reading notes and thoughts</p>
+        <div className="header-content">
+          <h1>📚 Book Notes</h1>
+          <nav className="main-nav">
+            <a href="#books" className="nav-link">Books</a>
+            <a href="#notes" className="nav-link">Notes</a>
+            <a href="#analysis" className="nav-link">Reading Analysis</a>
+          </nav>
+        </div>
       </header>
 
       <main className="App-main">

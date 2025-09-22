@@ -3,29 +3,64 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .App-header {
-  background-color: #2c3e50;
-  padding: 2rem;
-  color: white;
+  background-color: white;
+  padding: 1rem 2rem;
+  color: black;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .App-header h1 {
-  margin: 0 0 0.5rem 0;
-  font-size: 2.5rem;
+  margin: 0;
+  font-size: 2rem;
+  font-family: 'Literata', serif;
+  color: black;
 }
 
-.App-header p {
-  margin: 0;
-  font-size: 1.1rem;
-  opacity: 0.9;
+.main-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #666;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: black;
+  background-color: #f5f5f5;
+}
+
+.nav-link.active {
+  color: black;
+  background-color: #f0f0f0;
 }
 
 .App-main {
   flex: 1;
   padding: 2rem;
-  background-color: #f8f9fa;
+  background-color: white;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .book-form {
@@ -34,12 +69,14 @@
   background: white;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .book-form h2 {
   margin-top: 0;
-  color: #2c3e50;
+  color: black;
+  font-family: 'Literata', serif;
 }
 
 .form-group {
@@ -50,62 +87,69 @@
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: bold;
-  color: #555;
+  font-weight: 500;
+  color: black;
 }
 
 .form-group input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  border: 1px solid #d0d0d0;
   border-radius: 4px;
   font-size: 1rem;
   box-sizing: border-box;
+  transition: border-color 0.2s ease;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  border-color: black;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
 .form-group input:disabled {
-  background-color: #f5f5f5;
+  background-color: #f8f8f8;
   color: #999;
+  border-color: #e0e0e0;
 }
 
 button {
-  background-color: #3498db;
+  background-color: black;
   color: white;
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 4px;
   font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
 }
 
 button:hover:not(:disabled) {
-  background-color: #2980b9;
+  background-color: #333;
+  transform: translateY(-1px);
 }
 
 button:disabled {
-  background-color: #bdc3c7;
+  background-color: #999;
   cursor: not-allowed;
+  transform: none;
 }
 
 .error {
   margin-top: 1rem;
   padding: 0.75rem;
-  background-color: #e74c3c;
-  color: white;
+  background-color: #fee;
+  color: #c33;
+  border: 1px solid #fcc;
   border-radius: 4px;
 }
 
 .success {
   margin-top: 1rem;
   padding: 0.75rem;
-  background-color: #27ae60;
-  color: white;
+  background-color: #efe;
+  color: #363;
+  border: 1px solid #cfc;
   border-radius: 4px;
 }
