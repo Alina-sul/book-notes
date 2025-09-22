@@ -44,3 +44,7 @@ dist/
 
 # Ignore backup files from editors like vim/emacs
 *~
+
+# LLM
+.claude
+CLAUDE.md
