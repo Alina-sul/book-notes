@@ -15,13 +15,8 @@ import {
   Close as CloseIcon,
   Add as AddIcon
 } from '@mui/icons-material';
-import { Book } from '../../types/Book';
-
-interface AddBookModalProps {
-  open: boolean;
-  onClose: () => void;
-  onAddBook: (bookData: Omit<Book, 'id' | 'dateAdded' | 'notesCount'>) => void;
-}
+import { AddBookModalProps, BookStatus } from '../../types';
+import { APP_CONFIG, BOOK_STATUS, BOOK_STATUS_LABELS } from '../../constants';
 
 const AddBookModal: React.FC<AddBookModalProps> = ({ open, onClose, onAddBook }) => {
   const [title, setTitle] = useState('');
@@ -29,7 +24,7 @@ const AddBookModal: React.FC<AddBookModalProps> = ({ open, onClose, onAddBook })
   const [coverUrl, setCoverUrl] = useState('');
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState('');
-  const [status, setStatus] = useState<'reading' | 'finished' | 'wishlist'>('wishlist');
+  const [status, setStatus] = useState<BookStatus>(BOOK_STATUS.WISHLIST);
 
   const handleAddTag = () => {
     if (newTag.trim() && !tags.includes(newTag.trim())) {
@@ -50,7 +45,7 @@ const AddBookModal: React.FC<AddBookModalProps> = ({ open, onClose, onAddBook })
     const bookData = {
       title: title.trim(),
       author: author.trim(),
-      coverUrl: coverUrl.trim() || 'https://via.placeholder.com/120x180?text=No+Cover',
+      coverUrl: coverUrl.trim() || APP_CONFIG.defaultCoverUrl,
       tags,
       status,
       rating: undefined,
@@ -68,7 +63,7 @@ const AddBookModal: React.FC<AddBookModalProps> = ({ open, onClose, onAddBook })
     setCoverUrl('');
     setTags([]);
     setNewTag('');
-    setStatus('wishlist');
+    setStatus(BOOK_STATUS.WISHLIST);
     onClose();
   };
 
@@ -239,9 +234,9 @@ const AddBookModal: React.FC<AddBookModalProps> = ({ open, onClose, onAddBook })
             </Typography>
             <Box sx={{ display: 'flex', gap: 1 }}>
               {[
-                { value: 'wishlist', label: 'Reading List' },
-                { value: 'reading', label: 'Currently Reading' },
-                { value: 'finished', label: 'Finished' },
+                { value: BOOK_STATUS.WISHLIST, label: BOOK_STATUS_LABELS.wishlist },
+                { value: BOOK_STATUS.READING, label: BOOK_STATUS_LABELS.reading },
+                { value: BOOK_STATUS.FINISHED, label: BOOK_STATUS_LABELS.finished },
               ].map((option) => (
                 <Chip
                   key={option.value}

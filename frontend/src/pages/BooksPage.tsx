@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Container } from '@mui/material';
-import { BookFilters, ViewMode, Book } from '../types/Book';
+import { BookFilters, ViewMode, Book } from '../types';
 import { mockBooks } from '../data/mockBooks';
+import { filterBooks, createNewBook } from '../utils/bookUtils';
 import SearchFilterBar from '../components/Books/SearchFilterBar';
 import Sidebar from '../components/Books/Sidebar';
 import BooksList from '../components/Books/BooksList';
@@ -20,19 +21,7 @@ const BooksPage: React.FC = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   // Filter books based on search query and filters
-  const filteredBooks = books.filter(book => {
-    // Search filter
-    const matchesSearch = book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         book.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-
-    // Status filter
-    const matchesStatus = (filters.reading && book.status === 'reading') ||
-                         (filters.finished && book.status === 'finished') ||
-                         (filters.wishlist && book.status === 'wishlist');
-
-    return matchesSearch && matchesStatus;
-  });
+  const filteredBooks = filterBooks(books, searchQuery, filters);
 
   const handleFilterChange = (filterType: keyof BookFilters) => {
     setFilters(prev => ({
@@ -42,12 +31,7 @@ const BooksPage: React.FC = () => {
   };
 
   const handleAddBook = (bookData: Omit<Book, 'id' | 'dateAdded' | 'notesCount'>) => {
-    const newBook: Book = {
-      ...bookData,
-      id: Math.max(...books.map(b => b.id)) + 1,
-      dateAdded: new Date().toISOString().split('T')[0],
-      notesCount: 0,
-    };
+    const newBook = createNewBook(bookData, books);
     setBooks(prev => [...prev, newBook]);
   };
 

@@ -1,40 +1,26 @@
 import React from 'react';
 import { Chip } from '@mui/material';
-import { BookStatus } from '../../types/Book';
-
-interface StatusChipProps {
-  status: BookStatus;
-  size?: 'small' | 'medium';
-}
+import { StatusChipProps } from '../../types';
+import { BOOK_STATUS_COLORS, BOOK_STATUS_LABELS } from '../../constants';
 
 const StatusChip: React.FC<StatusChipProps> = ({ status, size = 'small' }) => {
-  const getStatusConfig = (status: BookStatus) => {
-    switch (status) {
-      case 'reading':
-        return {
-          label: 'Currently Reading',
-          color: '#E3F2FD', // Light blue
-          textColor: '#1565C0',
-        };
-      case 'finished':
-        return {
-          label: 'Finished',
-          color: '#E8F5E8', // Light green
-          textColor: '#2E7D32',
-        };
-      case 'wishlist':
-        return {
-          label: 'Reading List',
-          color: '#FFF3E0', // Light orange/peach
-          textColor: '#E65100',
-        };
-      default:
-        return {
-          label: status,
-          color: '#F5F5F5',
-          textColor: '#666',
-        };
+  const getStatusConfig = (status: StatusChipProps['status']) => {
+    const colors = BOOK_STATUS_COLORS[status];
+    const label = BOOK_STATUS_LABELS[status];
+
+    if (colors && label) {
+      return {
+        label,
+        color: colors.background,
+        textColor: colors.text,
+      };
     }
+
+    return {
+      label: status,
+      color: '#F5F5F5',
+      textColor: '#666',
+    };
   };
 
   const config = getStatusConfig(status);

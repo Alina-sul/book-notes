@@ -1,11 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { Book } from '../../types/Book';
+import { BooksListProps } from '../../types';
 import BookItem from './BookItem';
-
-interface BooksListProps {
-  books: Book[];
-}
 
 const BooksList: React.FC<BooksListProps> = ({ books }) => {
   if (books.length === 0) {
