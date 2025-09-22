@@ -6,7 +6,7 @@ pub mod services;
 
 pub use errors::*;
 pub use models::*;
-pub use routes::*;
+pub use routes::create_api_routes;
 pub use services::*;
 
 // Re-export for external use
