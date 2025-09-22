@@ -6,7 +6,7 @@ use axum::{
 };
 
 use crate::errors::{ApiError, ApiResult};
-use crate::models::{Book, BookFilter, CreateBookRequest, UpdateBookRequest};
+use crate::models::{BookFilter, CreateBookRequest, UpdateBookRequest};
 use crate::services::BookService;
 
 pub async fn get_books(
