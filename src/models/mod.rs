@@ -1,3 +1,5 @@
-pub mod book;
+pub mod book_types;
+pub mod book_validation;
 
-pub use book::*;
+// Re-export all book-related types and traits
+pub use book_types::*;
