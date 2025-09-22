@@ -1,8 +1,11 @@
 use sqlx::PgPool;
-use tokio;
 use std::env;
+use tokio;
+
 mod server;
 use server::create_app;
+
+use book_notes::BookService;
 
 #[tokio::main]
 async fn main() {
@@ -15,8 +18,11 @@ async fn main() {
         .await
         .expect("Failed to create Postgres pool");
 
+    // Create book service
+    let book_service = BookService::new(pool);
+
     // Build the app (router)
-    let app = create_app(pool);
+    let app = create_app(book_service);
 
     // Define the address/port
     let addr = tokio::net::TcpListener::bind("127.0.0.1:8080").await.unwrap();
