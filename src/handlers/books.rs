@@ -7,49 +7,49 @@ use axum::{
 
 use crate::errors::{ApiError, ApiResult};
 use crate::models::{BookFilter, CreateBookRequest, UpdateBookRequest};
-use crate::services::BookService;
+use crate::services::AppState;
 
 pub async fn get_books(
-    State(book_service): State<BookService>,
+    State(app_state): State<AppState>,
     Query(filter): Query<BookFilter>,
 ) -> ApiResult<impl IntoResponse> {
-    let books = book_service.get_all_books(filter).await?;
+    let books = app_state.book_service.get_all_books(filter).await?;
     Ok(Json(books))
 }
 
 pub async fn get_book_by_id(
-    State(book_service): State<BookService>,
+    State(app_state): State<AppState>,
     Path(id): Path<i32>,
 ) -> ApiResult<impl IntoResponse> {
-    let book = book_service.get_book_by_id(id).await?;
+    let book = app_state.book_service.get_book_by_id(id).await?;
     Ok(Json(book))
 }
 
 pub async fn create_book(
-    State(book_service): State<BookService>,
+    State(app_state): State<AppState>,
     Json(request): Json<CreateBookRequest>,
 ) -> ApiResult<impl IntoResponse> {
     // Validate request
     request.validate().map_err(ApiError::ValidationError)?;
 
-    let book = book_service.create_book(request).await?;
+    let book = app_state.book_service.create_book(request).await?;
     Ok((StatusCode::CREATED, Json(book)))
 }
 
 pub async fn update_book(
-    State(book_service): State<BookService>,
+    State(app_state): State<AppState>,
     Path(id): Path<i32>,
     Json(request): Json<UpdateBookRequest>,
 ) -> ApiResult<impl IntoResponse> {
     // Validate request
     request.validate().map_err(ApiError::ValidationError)?;
 
-    let book = book_service.update_book(id, request).await?;
+    let book = app_state.book_service.update_book(id, request).await?;
     Ok(Json(book))
 }
 
 pub async fn patch_book(
-    State(book_service): State<BookService>,
+    State(app_state): State<AppState>,
     Path(id): Path<i32>,
     Json(request): Json<UpdateBookRequest>,
 ) -> ApiResult<impl IntoResponse> {
@@ -58,14 +58,14 @@ pub async fn patch_book(
         request.validate().map_err(ApiError::ValidationError)?;
     }
 
-    let book = book_service.update_book(id, request).await?;
+    let book = app_state.book_service.update_book(id, request).await?;
     Ok(Json(book))
 }
 
 pub async fn delete_book(
-    State(book_service): State<BookService>,
+    State(app_state): State<AppState>,
     Path(id): Path<i32>,
 ) -> ApiResult<impl IntoResponse> {
-    book_service.delete_book(id).await?;
+    app_state.book_service.delete_book(id).await?;
     Ok(StatusCode::NO_CONTENT)
 }

@@ -4,9 +4,9 @@ use axum::{
 };
 
 use crate::handlers::books::{create_book, delete_book, get_book_by_id, get_books, patch_book, update_book};
-use crate::services::BookService;
+use crate::services::AppState;
 
-pub fn create_book_routes() -> Router<BookService> {
+pub fn create_book_routes() -> Router<AppState> {
     Router::new()
         .route("/api/books", get(get_books).post(create_book))
         .route(
