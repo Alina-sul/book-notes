@@ -8,13 +8,15 @@ import {
   FormControl,
   Select,
   MenuItem,
-  SelectChangeEvent
+  SelectChangeEvent,
+  Button
 } from '@mui/material';
 import {
   Search as SearchIcon,
   ViewList as ViewListIcon,
   ViewModule as ViewModuleIcon,
-  FilterList as FilterListIcon
+  FilterList as FilterListIcon,
+  Add as AddIcon
 } from '@mui/icons-material';
 import { ViewMode } from '../../types/Book';
 
@@ -23,6 +25,7 @@ interface SearchFilterBarProps {
   onSearchChange: (query: string) => void;
   viewMode: ViewMode;
   onViewModeChange: (mode: ViewMode) => void;
+  onAddBookClick: () => void;
 }
 
 const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
@@ -30,6 +33,7 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
   onSearchChange,
   viewMode,
   onViewModeChange,
+  onAddBookClick,
 }) => {
   const handleViewModeChange = (
     event: React.MouseEvent<HTMLElement>,
@@ -121,8 +125,29 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
         </FormControl>
       </Box>
 
-      {/* Right side: View mode toggle */}
-      <ToggleButtonGroup
+      {/* Right side: Add Book button and View mode toggle */}
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        <Button
+          onClick={onAddBookClick}
+          variant="contained"
+          startIcon={<AddIcon />}
+          sx={{
+            backgroundColor: 'black',
+            color: 'white',
+            textTransform: 'none',
+            fontWeight: 500,
+            px: 2,
+            py: 1,
+            borderRadius: 1,
+            '&:hover': {
+              backgroundColor: '#333',
+            },
+          }}
+        >
+          Add Book
+        </Button>
+
+        <ToggleButtonGroup
         value={viewMode}
         exclusive
         onChange={handleViewModeChange}
@@ -151,6 +176,7 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
           <ViewModuleIcon />
         </ToggleButton>
       </ToggleButtonGroup>
+      </Box>
     </Box>
   );
 };

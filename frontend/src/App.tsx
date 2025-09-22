@@ -6,7 +6,6 @@ import './App.css';
 import BooksPage from './pages/BooksPage';
 import NotesPage from './pages/NotesPage';
 import AnalysisPage from './pages/AnalysisPage';
-import BookForm from './components/BookForm';
 
 // Create a custom theme that matches our design
 const theme = createTheme({
@@ -160,11 +159,6 @@ function App() {
             <Route path="/books" element={<BooksPage />} />
             <Route path="/notes" element={<NotesPage />} />
             <Route path="/analysis" element={<AnalysisPage />} />
-            <Route path="/add-book" element={
-              <main className="App-main">
-                <BookForm onBookCreated={(id) => console.log(`Book created with ID: ${id}`)} />
-              </main>
-            } />
           </Routes>
         </div>
       </Router>

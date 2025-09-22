@@ -73,6 +73,14 @@ const BookItem: React.FC<BookItemProps> = ({ book, viewMode }) => {
             >
               by {book.author}
             </Typography>
+
+            {/* Notes count - visible in left section */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 1 }}>
+              <NotesIcon sx={{ fontSize: 16, color: 'black' }} />
+              <Typography variant="caption" sx={{ fontWeight: 500, color: 'black' }}>
+                {book.notesCount} {book.notesCount === 1 ? 'note' : 'notes'}
+              </Typography>
+            </Box>
           </Box>
 
           {/* Tags and Info - Right */}
@@ -95,16 +103,8 @@ const BookItem: React.FC<BookItemProps> = ({ book, viewMode }) => {
               ))}
             </Box>
 
-            {/* Notes count and Status */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              {book.notesCount > 0 && (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                  <NotesIcon sx={{ fontSize: 16, color: '#666' }} />
-                  <Typography variant="caption" color="text.secondary">
-                    {book.notesCount}
-                  </Typography>
-                </Box>
-              )}
+            {/* Status */}
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
               <StatusChip status={book.status} />
             </Box>
           </Box>
@@ -196,8 +196,8 @@ const BookItem: React.FC<BookItemProps> = ({ book, viewMode }) => {
         {/* Bottom section */}
         <Box sx={{ mt: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-            <NotesIcon sx={{ fontSize: 16, color: '#666' }} />
-            <Typography variant="caption" color="text.secondary">
+            <NotesIcon sx={{ fontSize: 16, color: 'black' }} />
+            <Typography variant="caption" sx={{ color: 'black', fontWeight: 500 }}>
               {book.notesCount}
             </Typography>
           </Box>
