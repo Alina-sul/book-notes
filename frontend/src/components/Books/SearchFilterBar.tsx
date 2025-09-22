@@ -18,15 +18,7 @@ import {
   FilterList as FilterListIcon,
   Add as AddIcon
 } from '@mui/icons-material';
-import { ViewMode } from '../../types/Book';
-
-interface SearchFilterBarProps {
-  searchQuery: string;
-  onSearchChange: (query: string) => void;
-  viewMode: ViewMode;
-  onViewModeChange: (mode: ViewMode) => void;
-  onAddBookClick: () => void;
-}
+import { SearchFilterBarProps, ViewMode } from '../../types';
 
 const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
   searchQuery,

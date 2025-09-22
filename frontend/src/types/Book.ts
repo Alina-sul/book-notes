@@ -5,7 +5,7 @@ export interface Book {
   coverUrl: string;
   tags: string[];
   notesCount: number;
-  status: 'reading' | 'finished' | 'wishlist';
+  status: BookStatus;
   dateAdded: string;
   dateFinished?: string;
   rating?: number;
@@ -13,10 +13,27 @@ export interface Book {
 }
 
 export type BookStatus = 'reading' | 'finished' | 'wishlist';
-export type ViewMode = 'list' | 'grid';
 
-export interface BookFilters {
-  reading: boolean;
-  finished: boolean;
-  wishlist: boolean;
+export interface BookItemProps {
+  book: Book;
+  viewMode: 'list' | 'grid';
+}
+
+export interface BooksListProps {
+  books: Book[];
+}
+
+export interface BooksGridProps {
+  books: Book[];
+}
+
+export interface StatusChipProps {
+  status: BookStatus;
+  size?: 'small' | 'medium';
+}
+
+export interface AddBookModalProps {
+  open: boolean;
+  onClose: () => void;
+  onAddBook: (bookData: Omit<Book, 'id' | 'dateAdded' | 'notesCount'>) => void;
 }

@@ -8,13 +8,9 @@ import {
 import {
   StickyNote2 as NotesIcon
 } from '@mui/icons-material';
-import { Book } from '../../types/Book';
+import { BookItemProps } from '../../types';
+import { formatNotesCount } from '../../utils/bookUtils';
 import StatusChip from './StatusChip';
-
-interface BookItemProps {
-  book: Book;
-  viewMode: 'list' | 'grid';
-}
 
 const BookItem: React.FC<BookItemProps> = ({ book, viewMode }) => {
   if (viewMode === 'list') {
@@ -78,7 +74,7 @@ const BookItem: React.FC<BookItemProps> = ({ book, viewMode }) => {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 1 }}>
               <NotesIcon sx={{ fontSize: 16, color: 'black' }} />
               <Typography variant="caption" sx={{ fontWeight: 500, color: 'black' }}>
-                {book.notesCount} {book.notesCount === 1 ? 'note' : 'notes'}
+                {formatNotesCount(book.notesCount)}
               </Typography>
             </Box>
           </Box>

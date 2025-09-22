@@ -9,35 +9,31 @@ import {
 import {
   Check as CheckIcon
 } from '@mui/icons-material';
-import { BookFilters } from '../../types/Book';
-
-interface SidebarProps {
-  filters: BookFilters;
-  onFilterChange: (filterType: keyof BookFilters) => void;
-}
+import { SidebarProps } from '../../types';
+import { BOOK_STATUS_COLORS, BOOK_STATUS_LABELS } from '../../constants';
 
 const Sidebar: React.FC<SidebarProps> = ({ filters, onFilterChange }) => {
   const filterOptions = [
     {
-      key: 'reading' as keyof BookFilters,
-      label: 'Currently Reading',
+      key: 'reading' as keyof SidebarProps['filters'],
+      label: BOOK_STATUS_LABELS.reading,
       checked: filters.reading,
-      color: '#1565C0', // Blue
-      bgColor: '#E3F2FD',
+      color: BOOK_STATUS_COLORS.reading.text,
+      bgColor: BOOK_STATUS_COLORS.reading.background,
     },
     {
-      key: 'finished' as keyof BookFilters,
-      label: 'Finished Reading',
+      key: 'finished' as keyof SidebarProps['filters'],
+      label: BOOK_STATUS_LABELS.finished,
       checked: filters.finished,
-      color: '#2E7D32', // Green
-      bgColor: '#E8F5E8',
+      color: BOOK_STATUS_COLORS.finished.text,
+      bgColor: BOOK_STATUS_COLORS.finished.background,
     },
     {
-      key: 'wishlist' as keyof BookFilters,
-      label: 'Reading List',
+      key: 'wishlist' as keyof SidebarProps['filters'],
+      label: BOOK_STATUS_LABELS.wishlist,
       checked: filters.wishlist,
-      color: '#E65100', // Orange
-      bgColor: '#FFF3E0',
+      color: BOOK_STATUS_COLORS.wishlist.text,
+      bgColor: BOOK_STATUS_COLORS.wishlist.background,
     },
   ];
 
