@@ -1,0 +1,155 @@
+.App {
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.App-header {
+  background-color: white;
+  padding: 1rem 2rem;
+  color: black;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.App-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-family: 'Literata', serif;
+  color: black;
+}
+
+.main-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #666;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: black;
+  background-color: #f5f5f5;
+}
+
+.nav-link.active {
+  color: black;
+  background-color: #f0f0f0;
+}
+
+.App-main {
+  flex: 1;
+  padding: 2rem;
+  background-color: white;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.book-form {
+  max-width: 500px;
+  margin: 0 auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.book-form h2 {
+  margin-top: 0;
+  color: black;
+  font-family: 'Literata', serif;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: black;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: black;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.form-group input:disabled {
+  background-color: #f8f8f8;
+  color: #999;
+  border-color: #e0e0e0;
+}
+
+button {
+  background-color: black;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  background-color: #333;
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.error {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: #fee;
+  color: #c33;
+  border: 1px solid #fcc;
+  border-radius: 4px;
+}
+
+.success {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: #efe;
+  color: #363;
+  border: 1px solid #cfc;
+  border-radius: 4px;
+}

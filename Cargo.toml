@@ -27,9 +27,10 @@ dotenvy = "0.15"
 book_notes_api = { path = "crates/api" }
 serde = { version = "1.0.217"}
 serde_json = { version = "1.0"}
+tower-http = { version = "0.6", features = ["cors"] }
 
 
-# The main crate’s own dependencies, referencing the workspace for each:
+# The main crate's own dependencies, referencing the workspace for each:
 [dependencies]
 axum = { workspace = true }
 tokio = { workspace = true }
@@ -38,3 +39,4 @@ utoipa = { workspace = true }
 utoipa-swagger-ui = { workspace = true }
 dotenvy = { workspace = true }
 book_notes_api = { workspace = true }
+tower-http = { workspace = true }
