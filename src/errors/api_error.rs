@@ -43,14 +43,20 @@ impl IntoResponse for ApiError {
         let (status, error_message) = match &self {
             ApiError::DatabaseError(err) => {
                 eprintln!("Database error: {:?}", err);
-                (StatusCode::INTERNAL_SERVER_ERROR, "Internal server error".to_string())
+                (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    "Internal server error".to_string(),
+                )
             }
             ApiError::NotFound(msg) => (StatusCode::NOT_FOUND, msg.clone()),
             ApiError::BadRequest(msg) => (StatusCode::BAD_REQUEST, msg.clone()),
             ApiError::ValidationError(msg) => (StatusCode::BAD_REQUEST, msg.clone()),
             ApiError::InternalError(msg) => {
                 eprintln!("Internal error: {}", msg);
-                (StatusCode::INTERNAL_SERVER_ERROR, "Internal server error".to_string())
+                (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    "Internal server error".to_string(),
+                )
             }
         };
 
