@@ -101,7 +101,15 @@ const AddBookModal: React.FC<AddBookModalProps> = ({ open, onClose, onAddBook })
         alignItems: 'center'
       }}>
         Add a New Book
-        <IconButton onClick={handleClose} size="small">
+        <IconButton
+          onClick={handleClose}
+          size="small"
+          sx={{
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            },
+          }}
+        >
           <CloseIcon />
         </IconButton>
       </DialogTitle>
@@ -265,7 +273,8 @@ const AddBookModal: React.FC<AddBookModalProps> = ({ open, onClose, onAddBook })
             color: '#666',
             textTransform: 'none',
             '&:hover': {
-              backgroundColor: 'rgba(0, 0, 0, 0.04)',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              color: '#000',
             },
           }}
         >

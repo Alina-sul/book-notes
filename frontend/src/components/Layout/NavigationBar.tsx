@@ -27,30 +27,51 @@ const NavigationBar: React.FC = () => {
         variant="dense"
         sx={{
           justifyContent: 'space-between',
-          maxWidth: APP_CONFIG.maxWidth,
+          maxWidth: 'xl',
           margin: '0 auto',
           width: '100%',
-          px: 2,
+          px: 3,
           minHeight: '100px !important',
         }}
       >
-        <Typography
-          variant="h4"
+        <Box
           component={Link}
           to={ROUTES.BOOKS}
           sx={{
-            fontFamily: 'Literata, serif',
-            color: 'black',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
             textDecoration: 'none',
-            fontWeight: 600,
-            fontSize: '1.8rem',
           }}
         >
-          {APP_CONFIG.title}
-        </Typography>
+          <Box
+            sx={{
+              width: 18,
+              height: 18,
+              backgroundColor: 'black',
+              borderRadius: '50%',
+              flexShrink: 0,
+              alignSelf: 'center',
+              marginTop: '2px', // Fine-tune vertical alignment
+            }}
+          />
+          <Typography
+            variant="h4"
+            sx={{
+              fontFamily: 'Literata, serif',
+              color: 'black',
+              textDecoration: 'none',
+              fontWeight: 600,
+              fontSize: '1.8rem',
+              lineHeight: 1,
+            }}
+          >
+            {APP_CONFIG.title}
+          </Typography>
+        </Box>
 
         <Box sx={{ display: 'flex', gap: 2 }}>
-          {navItems.map((item) => (
+          {navItems.map((item, index) => (
             <Button
               key={item.path}
               component={Link}
@@ -62,7 +83,8 @@ const NavigationBar: React.FC = () => {
                 fontWeight: location.pathname === item.path ? 600 : 500,
                 textTransform: 'none',
                 fontSize: '1rem',
-                px: 1.5,
+                pl: 1.5,
+                pr: index === navItems.length - 1 ? 0 : 1.5,
                 py: 1,
                 borderRadius: 0,
                 position: 'relative',

@@ -1,7 +1,7 @@
 // Application constants
 
 export const APP_CONFIG = {
-  title: '📚 Book Notes',
+  title: 'Book Notes',
   maxWidth: '1200px',
   defaultCoverUrl: 'https://via.placeholder.com/120x180?text=No+Cover',
 } as const;
