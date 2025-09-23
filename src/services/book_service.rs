@@ -1,5 +1,6 @@
 use chrono::Utc;
 use sqlx::{PgPool, Row};
+use validator::Validate;
 
 use crate::errors::ApiResult;
 use crate::models::{Book, BookFilter, BookStatus, CreateBookRequest, UpdateBookRequest};
@@ -15,6 +16,9 @@ impl BookService {
     }
 
     pub async fn create_book(&self, request: CreateBookRequest) -> ApiResult<Book> {
+        // Validate the request using the validator crate
+        request.validate()?;
+
         let status = request.status.unwrap_or(BookStatus::Wishlist);
         let tags = request.tags.unwrap_or_default();
         let date_added = Utc::now().date_naive();
@@ -100,6 +104,9 @@ impl BookService {
     }
 
     pub async fn update_book(&self, id: i32, request: UpdateBookRequest) -> ApiResult<Book> {
+        // Validate the request using the validator crate
+        request.validate()?;
+
         // First check if book exists
         self.get_book_by_id(id).await?;
 

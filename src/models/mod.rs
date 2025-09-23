@@ -1,5 +1,7 @@
 pub mod book_types;
-pub mod book_validation;
 
 // Re-export all book-related types and traits
 pub use book_types::*;
+
+// Re-export validator trait for validation
+pub use validator::Validate;

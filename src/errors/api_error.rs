@@ -38,6 +38,24 @@ impl From<sqlx::Error> for ApiError {
     }
 }
 
+impl From<validator::ValidationErrors> for ApiError {
+    fn from(err: validator::ValidationErrors) -> Self {
+        let mut error_messages = Vec::new();
+
+        for (field, field_errors) in err.field_errors() {
+            for error in field_errors {
+                if let Some(message) = &error.message {
+                    error_messages.push(format!("{}: {}", field, message));
+                } else {
+                    error_messages.push(format!("{}: validation failed", field));
+                }
+            }
+        }
+
+        ApiError::ValidationError(error_messages.join(", "))
+    }
+}
+
 impl IntoResponse for ApiError {
     fn into_response(self) -> Response {
         let (status, error_message) = match &self {
