@@ -6,12 +6,19 @@ edition = "2021"
 
 [dependencies]
 axum = { version = "0.7", features = ["tokio", "http1"] }
-tokio = { version = "1", features = ["full"] }
-sqlx = { version = "0.8.2", features = ["postgres", "runtime-tokio-rustls", "chrono"] }
-utoipa = "5.3.0"
-utoipa-swagger-ui = { version = "8", features = ["axum"] }
+tokio = { version = "1", features = ["full", "signal"] }
+sqlx = { version = "0.8.2", features = ["postgres", "runtime-tokio-rustls", "chrono", "migrate"] }
 dotenvy = "0.15"
 serde = { version = "1.0.217"}
 serde_json = { version = "1.0"}
 tower-http = { version = "0.6", features = ["cors"] }
 chrono = { version = "0.4", features = ["serde"] }
+
+# Logging and telemetry
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt", "json"] }
+tracing-bunyan-formatter = "0.3"
+tracing-log = "0.2"
+
+# Error handling
+thiserror = "1.0"
