@@ -22,3 +22,6 @@ tracing-log = "0.2"
 
 # Error handling
 thiserror = "1.0"
+
+# Validation
+validator = { version = "0.18", features = ["derive"] }

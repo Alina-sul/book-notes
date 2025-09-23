@@ -5,7 +5,7 @@ use axum::{
     Json,
 };
 
-use crate::errors::{ApiError, ApiResult};
+use crate::errors::ApiResult;
 use crate::models::{BookFilter, CreateBookRequest, UpdateBookRequest};
 use crate::services::AppState;
 
@@ -29,9 +29,6 @@ pub async fn create_book(
     State(app_state): State<AppState>,
     Json(request): Json<CreateBookRequest>,
 ) -> ApiResult<impl IntoResponse> {
-    // Validate request
-    request.validate().map_err(ApiError::ValidationError)?;
-
     let book = app_state.book_service.create_book(request).await?;
     Ok((StatusCode::CREATED, Json(book)))
 }
@@ -41,9 +38,6 @@ pub async fn update_book(
     Path(id): Path<i32>,
     Json(request): Json<UpdateBookRequest>,
 ) -> ApiResult<impl IntoResponse> {
-    // Validate request
-    request.validate().map_err(ApiError::ValidationError)?;
-
     let book = app_state.book_service.update_book(id, request).await?;
     Ok(Json(book))
 }
@@ -53,11 +47,6 @@ pub async fn patch_book(
     Path(id): Path<i32>,
     Json(request): Json<UpdateBookRequest>,
 ) -> ApiResult<impl IntoResponse> {
-    // For PATCH, we can skip validation on empty fields
-    if request.title.is_some() || request.author.is_some() || request.rating.is_some() {
-        request.validate().map_err(ApiError::ValidationError)?;
-    }
-
     let book = app_state.book_service.update_book(id, request).await?;
     Ok(Json(book))
 }
