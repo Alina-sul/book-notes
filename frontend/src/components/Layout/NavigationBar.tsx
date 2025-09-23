@@ -30,7 +30,7 @@ const NavigationBar: React.FC = () => {
           maxWidth: 'xl',
           margin: '0 auto',
           width: '100%',
-          px: 3,
+          px: 12,
           minHeight: '100px !important',
         }}
       >

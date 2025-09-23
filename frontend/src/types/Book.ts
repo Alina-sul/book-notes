@@ -17,14 +17,20 @@ export type BookStatus = 'reading' | 'finished' | 'wishlist';
 export interface BookItemProps {
   book: Book;
   viewMode: 'list' | 'grid';
+  onEdit: (book: Book) => void;
+  onDelete: (bookId: number) => void;
 }
 
 export interface BooksListProps {
   books: Book[];
+  onEdit: (book: Book) => void;
+  onDelete: (bookId: number) => void;
 }
 
 export interface BooksGridProps {
   books: Book[];
+  onEdit: (book: Book) => void;
+  onDelete: (bookId: number) => void;
 }
 
 export interface StatusChipProps {
@@ -36,4 +42,18 @@ export interface AddBookModalProps {
   open: boolean;
   onClose: () => void;
   onAddBook: (bookData: Omit<Book, 'id' | 'dateAdded' | 'notesCount'>) => void;
+}
+
+export interface EditBookModalProps {
+  open: boolean;
+  book: Book | null;
+  onClose: () => void;
+  onEditBook: (bookData: Omit<Book, 'dateAdded' | 'notesCount'>) => void;
+}
+
+export interface DeleteConfirmDialogProps {
+  open: boolean;
+  bookTitle: string;
+  onClose: () => void;
+  onConfirm: () => void;
 }

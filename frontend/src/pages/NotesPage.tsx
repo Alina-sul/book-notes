@@ -3,7 +3,7 @@ import { Container, Typography, Box } from '@mui/material';
 
 const NotesPage: React.FC = () => {
   return (
-    <Container maxWidth="xl" sx={{ py: 3 }}>
+    <Container maxWidth="xl" sx={{ py: 3, px: 12 }}>
       <Box sx={{ textAlign: 'center', mt: 8 }}>
         <Typography variant="h3" component="h1" sx={{ fontFamily: 'Literata', mb: 2 }}>
           📝 Notes

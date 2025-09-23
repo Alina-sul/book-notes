@@ -3,20 +3,27 @@ import {
   Box,
   Typography,
   Paper,
-  Chip
+  Chip,
+  IconButton,
+  Fade
 } from '@mui/material';
 import {
-  StickyNote2 as NotesIcon
+  StickyNote2 as NotesIcon,
+  Edit as EditIcon,
+  Delete as DeleteIcon
 } from '@mui/icons-material';
 import { BookItemProps } from '../../types';
 import { formatNotesCount } from '../../utils/bookUtils';
 import StatusChip from './StatusChip';
 
-const BookItem: React.FC<BookItemProps> = ({ book, viewMode }) => {
+const BookItem: React.FC<BookItemProps> = ({ book, viewMode, onEdit, onDelete }) => {
+  const [isHovered, setIsHovered] = React.useState(false);
   if (viewMode === 'list') {
     return (
       <Paper
         elevation={0}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         sx={{
           p: 2,
           mb: 1,
@@ -24,12 +31,63 @@ const BookItem: React.FC<BookItemProps> = ({ book, viewMode }) => {
           borderRadius: 2,
           cursor: 'pointer',
           transition: 'all 0.2s ease',
+          position: 'relative',
           '&:hover': {
             borderColor: '#000',
             backgroundColor: 'white',
           },
         }}
       >
+        {/* Action buttons - List view */}
+        <Fade in={isHovered}>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: 8,
+              right: 8,
+              display: 'flex',
+              gap: 0.5,
+              zIndex: 1,
+            }}
+          >
+            <IconButton
+              size="small"
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit(book);
+              }}
+              sx={{
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                width: 32,
+                height: 32,
+                '&:hover': {
+                  backgroundColor: 'white',
+                },
+              }}
+            >
+              <EditIcon sx={{ fontSize: 16 }} />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(book.id);
+              }}
+              sx={{
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                width: 32,
+                height: 32,
+                '&:hover': {
+                  backgroundColor: '#ffebee',
+                  color: '#d32f2f',
+                },
+              }}
+            >
+              <DeleteIcon sx={{ fontSize: 16 }} />
+            </IconButton>
+          </Box>
+        </Fade>
+
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           {/* Book Cover - Small */}
           <Box
@@ -80,28 +138,34 @@ const BookItem: React.FC<BookItemProps> = ({ book, viewMode }) => {
           </Box>
 
           {/* Tags and Info - Right */}
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 1, minWidth: 200 }}>
-            {/* Tags */}
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, justifyContent: 'flex-end' }}>
-              {book.tags.slice(0, 3).map((tag) => (
-                <Chip
-                  key={tag}
-                  label={tag}
-                  size="small"
-                  variant="outlined"
-                  sx={{
-                    fontSize: '0.7rem',
-                    height: 20,
-                    borderColor: '#ddd',
-                    color: '#666',
-                  }}
-                />
-              ))}
-            </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'space-between', minWidth: 200, height: '100%', pt: 2 }}>
+            {/* Empty space for action buttons */}
+            <Box sx={{ height: 32 }} />
 
-            {/* Status */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-              <StatusChip status={book.status} />
+            {/* Bottom section with tags and status */}
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 1 }}>
+              {/* Tags */}
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, justifyContent: 'flex-end' }}>
+                {book.tags.slice(0, 3).map((tag) => (
+                  <Chip
+                    key={tag}
+                    label={tag}
+                    size="small"
+                    variant="outlined"
+                    sx={{
+                      fontSize: '0.7rem',
+                      height: 20,
+                      borderColor: '#ddd',
+                      color: '#666',
+                    }}
+                  />
+                ))}
+              </Box>
+
+              {/* Status */}
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                <StatusChip status={book.status} />
+              </Box>
             </Box>
           </Box>
         </Box>
@@ -113,6 +177,8 @@ const BookItem: React.FC<BookItemProps> = ({ book, viewMode }) => {
   return (
     <Paper
       elevation={0}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       sx={{
         p: 2,
         border: '1px solid #e0e0e0',
@@ -122,12 +188,65 @@ const BookItem: React.FC<BookItemProps> = ({ book, viewMode }) => {
         flexDirection: 'column',
         cursor: 'pointer',
         transition: 'all 0.2s ease',
+        position: 'relative',
         '&:hover': {
           borderColor: '#000',
           backgroundColor: 'white',
         },
       }}
     >
+      {/* Action buttons - Grid view */}
+      <Fade in={isHovered}>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 8,
+            left: 8,
+            right: 8,
+            display: 'flex',
+            justifyContent: 'space-between',
+            zIndex: 1,
+          }}
+        >
+          <IconButton
+            size="small"
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit(book);
+            }}
+            sx={{
+              backgroundColor: 'rgba(255, 255, 255, 0.9)',
+              width: 32,
+              height: 32,
+              '&:hover': {
+                backgroundColor: 'white',
+              },
+            }}
+          >
+            <EditIcon sx={{ fontSize: 16 }} />
+          </IconButton>
+
+          <IconButton
+            size="small"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(book.id);
+            }}
+            sx={{
+              backgroundColor: 'rgba(255, 255, 255, 0.9)',
+              width: 32,
+              height: 32,
+              '&:hover': {
+                backgroundColor: '#ffebee',
+                color: '#d32f2f',
+              },
+            }}
+          >
+            <DeleteIcon sx={{ fontSize: 16 }} />
+          </IconButton>
+        </Box>
+      </Fade>
+
       {/* Book Cover - Larger */}
       <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
         <Box

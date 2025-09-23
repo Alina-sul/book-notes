@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -15,16 +15,31 @@ import {
   Close as CloseIcon,
   Add as AddIcon
 } from '@mui/icons-material';
-import { AddBookModalProps, BookStatus } from '../../types';
+import { EditBookModalProps, BookStatus } from '../../types';
 import { APP_CONFIG, BOOK_STATUS, BOOK_STATUS_LABELS } from '../../constants';
 
-const AddBookModal: React.FC<AddBookModalProps> = ({ open, onClose, onAddBook }) => {
+const EditBookModal: React.FC<EditBookModalProps> = ({ open, book, onClose, onEditBook }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [coverUrl, setCoverUrl] = useState('');
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState('');
   const [status, setStatus] = useState<BookStatus>(BOOK_STATUS.WISHLIST);
+  const [rating, setRating] = useState<string>('');
+  const [description, setDescription] = useState('');
+
+  // Populate form when book changes
+  useEffect(() => {
+    if (book) {
+      setTitle(book.title);
+      setAuthor(book.author);
+      setCoverUrl(book.coverUrl);
+      setTags(book.tags);
+      setStatus(book.status);
+      setRating(book.rating ? book.rating.toString() : '');
+      setDescription(book.description || '');
+    }
+  }, [book]);
 
   const handleAddTag = () => {
     if (newTag.trim() && !tags.includes(newTag.trim())) {
@@ -38,22 +53,23 @@ const AddBookModal: React.FC<AddBookModalProps> = ({ open, onClose, onAddBook })
   };
 
   const handleSubmit = () => {
-    if (!title.trim() || !author.trim()) {
+    if (!title.trim() || !author.trim() || !book) {
       return;
     }
 
     const bookData = {
+      id: book.id,
       title: title.trim(),
       author: author.trim(),
       coverUrl: coverUrl.trim() || APP_CONFIG.defaultCoverUrl,
       tags,
       status,
-      rating: undefined,
-      description: undefined,
+      rating: rating ? parseInt(rating) : undefined,
+      description: description.trim() || undefined,
       dateFinished: status === 'finished' ? new Date().toISOString().split('T')[0] : undefined,
     };
 
-    onAddBook(bookData);
+    onEditBook(bookData);
     handleClose();
   };
 
@@ -64,6 +80,8 @@ const AddBookModal: React.FC<AddBookModalProps> = ({ open, onClose, onAddBook })
     setTags([]);
     setNewTag('');
     setStatus(BOOK_STATUS.WISHLIST);
+    setRating('');
+    setDescription('');
     onClose();
   };
 
@@ -72,6 +90,8 @@ const AddBookModal: React.FC<AddBookModalProps> = ({ open, onClose, onAddBook })
       handleAddTag();
     }
   };
+
+  if (!book) return null;
 
   return (
     <Dialog
@@ -100,7 +120,7 @@ const AddBookModal: React.FC<AddBookModalProps> = ({ open, onClose, onAddBook })
         justifyContent: 'space-between',
         alignItems: 'center'
       }}>
-        Add a New Book
+        Edit Book
         <IconButton
           onClick={handleClose}
           size="small"
@@ -154,6 +174,46 @@ const AddBookModal: React.FC<AddBookModalProps> = ({ open, onClose, onAddBook })
             value={coverUrl}
             onChange={(e) => setCoverUrl(e.target.value)}
             fullWidth
+            variant="outlined"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&.Mui-focused fieldset': {
+                  borderColor: '#000',
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: '#000',
+              },
+            }}
+          />
+
+          <TextField
+            label="Rating (1-5)"
+            value={rating}
+            onChange={(e) => setRating(e.target.value)}
+            fullWidth
+            type="number"
+            inputProps={{ min: 1, max: 5 }}
+            variant="outlined"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&.Mui-focused fieldset': {
+                  borderColor: '#000',
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: '#000',
+              },
+            }}
+          />
+
+          <TextField
+            label="Description (optional)"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            fullWidth
+            multiline
+            rows={3}
             variant="outlined"
             sx={{
               '& .MuiOutlinedInput-root': {
@@ -288,11 +348,11 @@ const AddBookModal: React.FC<AddBookModalProps> = ({ open, onClose, onAddBook })
             },
           }}
         >
-          Add Book
+          Save Changes
         </Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default AddBookModal;
+export default EditBookModal;

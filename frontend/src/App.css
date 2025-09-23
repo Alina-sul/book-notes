@@ -153,3 +153,26 @@ button:disabled {
   border: 1px solid #cfc;
   border-radius: 4px;
 }
+
+/* Fix MUI IconButton hover states globally */
+.MuiIconButton-root:hover {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+.MuiIconButton-sizeSmall:hover {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+/* Fix MUI Button text variant hover states */
+.MuiButton-text:hover {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+/* Specific override for the CSS class you mentioned */
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall:hover {
+  background-color: #333 !important;
+  color: #fff !important;
+}
