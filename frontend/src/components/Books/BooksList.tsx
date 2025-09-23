@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import { BooksListProps } from '../../types';
 import BookItem from './BookItem';
 
-const BooksList: React.FC<BooksListProps> = ({ books }) => {
+const BooksList: React.FC<BooksListProps> = ({ books, onEdit, onDelete }) => {
   if (books.length === 0) {
     return (
       <Box sx={{ textAlign: 'center', py: 8 }}>
@@ -24,6 +24,8 @@ const BooksList: React.FC<BooksListProps> = ({ books }) => {
           key={book.id}
           book={book}
           viewMode="list"
+          onEdit={onEdit}
+          onDelete={onDelete}
         />
       ))}
     </Box>

@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import { BooksGridProps } from '../../types';
 import BookItem from './BookItem';
 
-const BooksGrid: React.FC<BooksGridProps> = ({ books }) => {
+const BooksGrid: React.FC<BooksGridProps> = ({ books, onEdit, onDelete }) => {
   if (books.length === 0) {
     return (
       <Box sx={{ textAlign: 'center', py: 8 }}>
@@ -35,6 +35,8 @@ const BooksGrid: React.FC<BooksGridProps> = ({ books }) => {
           key={book.id}
           book={book}
           viewMode="grid"
+          onEdit={onEdit}
+          onDelete={onDelete}
         />
       ))}
     </Box>

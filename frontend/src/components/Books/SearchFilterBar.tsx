@@ -99,13 +99,13 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
             sx={{
               backgroundColor: 'white',
               '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#d0d0d0',
+                border: 'none',
               },
               '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#333',
+                border: 'none',
               },
               '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#000',
+                border: 'none',
               },
             }}
           >

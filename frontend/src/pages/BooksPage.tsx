@@ -8,6 +8,8 @@ import Sidebar from '../components/Books/Sidebar';
 import BooksList from '../components/Books/BooksList';
 import BooksGrid from '../components/Books/BooksGrid';
 import AddBookModal from '../components/Books/AddBookModal';
+import EditBookModal from '../components/Books/EditBookModal';
+import DeleteConfirmDialog from '../components/Books/DeleteConfirmDialog';
 
 const BooksPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -19,6 +21,10 @@ const BooksPage: React.FC = () => {
   });
   const [books, setBooks] = useState<Book[]>(mockBooks);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const [bookToDelete, setBookToDelete] = useState<Book | null>(null);
 
   // Filter books based on search query and filters
   const filteredBooks = filterBooks(books, searchQuery, filters);
@@ -35,8 +41,48 @@ const BooksPage: React.FC = () => {
     setBooks(prev => [...prev, newBook]);
   };
 
+  const handleEditBook = (book: Book) => {
+    setSelectedBook(book);
+    setIsEditModalOpen(true);
+  };
+
+  const handleUpdateBook = (updatedBookData: Omit<Book, 'dateAdded' | 'notesCount'>) => {
+    setBooks(prev => prev.map(book =>
+      book.id === updatedBookData.id
+        ? { ...book, ...updatedBookData }
+        : book
+    ));
+    setSelectedBook(null);
+  };
+
+  const handleDeleteBook = (bookId: number) => {
+    const book = books.find(b => b.id === bookId);
+    if (book) {
+      setBookToDelete(book);
+      setIsDeleteDialogOpen(true);
+    }
+  };
+
+  const handleConfirmDelete = () => {
+    if (bookToDelete) {
+      setBooks(prev => prev.filter(book => book.id !== bookToDelete.id));
+      setBookToDelete(null);
+      setIsDeleteDialogOpen(false);
+    }
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setBookToDelete(null);
+    setIsDeleteDialogOpen(false);
+  };
+
+  const handleCloseEditModal = () => {
+    setSelectedBook(null);
+    setIsEditModalOpen(false);
+  };
+
   return (
-    <Container maxWidth="xl" sx={{ py: 3 }}>
+    <Container maxWidth="xl" sx={{ py: 3, px: 12 }}>
       <SearchFilterBar
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -53,9 +99,17 @@ const BooksPage: React.FC = () => {
 
         <Box sx={{ flex: 1 }}>
           {viewMode === 'list' ? (
-            <BooksList books={filteredBooks} />
+            <BooksList
+              books={filteredBooks}
+              onEdit={handleEditBook}
+              onDelete={handleDeleteBook}
+            />
           ) : (
-            <BooksGrid books={filteredBooks} />
+            <BooksGrid
+              books={filteredBooks}
+              onEdit={handleEditBook}
+              onDelete={handleDeleteBook}
+            />
           )}
         </Box>
       </Box>
@@ -64,6 +118,20 @@ const BooksPage: React.FC = () => {
         open={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         onAddBook={handleAddBook}
+      />
+
+      <EditBookModal
+        open={isEditModalOpen}
+        book={selectedBook}
+        onClose={handleCloseEditModal}
+        onEditBook={handleUpdateBook}
+      />
+
+      <DeleteConfirmDialog
+        open={isDeleteDialogOpen}
+        bookTitle={bookToDelete?.title || ''}
+        onClose={handleCloseDeleteDialog}
+        onConfirm={handleConfirmDelete}
       />
     </Container>
   );
